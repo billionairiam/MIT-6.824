@@ -6,13 +6,16 @@ package main
 // go run mrsequential.go wc.so pg*.txt
 //
 
-import "fmt"
-import "6.824/mr"
-import "plugin"
-import "os"
-import "log"
-import "io/ioutil"
-import "sort"
+import (
+	"fmt"
+	"io/ioutil"
+	"log"
+	"os"
+	"plugin"
+	"sort"
+
+	"6.824/mr"
+)
 
 // for sorting by key.
 type ByKey []mr.KeyValue
@@ -76,7 +79,6 @@ func main() {
 			values = append(values, intermediate[k].Value)
 		}
 		output := reducef(intermediate[i].Key, values)
-
 		// this is the correct format for each line of Reduce output.
 		fmt.Fprintf(ofile, "%v %v\n", intermediate[i].Key, output)
 
