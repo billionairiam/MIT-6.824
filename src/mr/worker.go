@@ -86,6 +86,10 @@ func Worker(mapf func(string, string) []KeyValue,
 		for i := 0; i < file_name.Nreduce; i++ {
 			files[i].Close()
 		}
+		hb := HeartBeat{}
+		hb.CompleteID = file_name.Index
+		args := ExampleArgs{}
+		call("Coordinator.Maped_signal", &hb, &args)
 	}
 
 	for {
@@ -134,7 +138,10 @@ func Worker(mapf func(string, string) []KeyValue,
 			i = j
 		}
 		mrfile.Close()
-
+		hb := HeartBeat{}
+		hb.CompleteID = rf.ReduceID
+		args := ExampleArgs{}
+		call("Coordinator.Reduced_signal", &hb, &args)
 	}
 
 	// CallExample()
